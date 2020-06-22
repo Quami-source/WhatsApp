@@ -1,0 +1,49 @@
+[
+    {
+        "id" : "1",
+        "name" : "Quami",
+        "message" : "Good afternoon",
+        "contact" : "0553554911",
+        "avator" : "../../assets/img/image1.jpg",
+        "status" : "Feeling the afternoon",
+        "date" : "12/04/20"
+    },
+    {
+        "id" : "2",
+        "name" : "Dad",
+        "message" : "I have sent you the money",
+        "contact" : "0553554911",
+        "avator" : "../../assets/img/image2.jpg",
+        "status" : "Feeling the afternoon",
+        "date" : "12/04/20",
+        "num" : "1"
+    },
+    {
+        "id" : "3",
+        "name" : "Elizabeth",
+        "message" : "Hi",
+        "contact" : "0553554911",
+        "avator" : "../../assets/img/image3.jpg",
+        "status" : "Feeling the afternoon",
+        "date" : "12/04/20",
+        "num" : "2"
+    },
+    {
+        "id" : "4",
+        "name" : "Gregory",
+        "message" : "Good afternoon",
+        "contact" : "0553554911",
+        "avator" : "../../assets/img/image4.jpg",
+        "status" : "Feeling the afternoon",
+        "date" : "9:30 AM"
+    },
+    {
+        "id" : "5",
+        "name" : "Amafi MTN",
+        "message" : "Good afternoon",
+        "contact" : "0553554911",
+        "avator" : "../../assets/img/image5.jpg",
+        "status" : "Feeling the afternoon",
+        "date" : "YESTERDAY"
+    }
+]

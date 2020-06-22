@@ -1,36 +1,115 @@
-import * as React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import React from 'react';
+import {StyleSheet, View, Text,StatusBar,Dimensions,TouchableOpacity} from 'react-native';
 
-const instructions = Platform.select({
-  ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
-  android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
-});
+//navigation defs
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to React Native!</Text>
-      <Text style={styles.instructions}>To get started, edit App.js</Text>
-      <Text style={styles.instructions}>{instructions}</Text>
-    </View>
+//components
+import SplashScreen from './screens/SplashScreen';
+import Welcome from './screens/Auth/Welcome';
+import NumAuth from './screens/Auth/NumAuth';
+import ProvNam from './screens/Auth/ProvNam';
+import {AuthContext} from './AuthContext';
+import HomeStack from './screens/MainStack/HomeStack';
+import TabBar from './components/TabBar';
+import Chat from './components/Chat';
+
+const AuthStack = createStackNavigator();
+//const HomeStack = createStackNavigator();
+
+const {width,height} = Dimensions.get('screen')
+
+const App = () => {
+  const state = {
+    isLoading: true,
+    token: null,
+  };
+
+  //defining the reducer
+  const reducer = (prevState, action) => {
+    switch (action.type) {
+      case 'RETRIEVE_TOKEN':
+        return {
+          ...prevState,
+          isLoading: false,
+          token: action.token,
+        };
+        break;
+      case 'NUM_AUTH':
+        return {
+          ...prevState,
+          isLoading: false,
+          token: action.token,
+        };
+      case 'SIGN_OUT':
+        return {
+          ...prevState,
+          isLoading: false,
+          token: null,
+        };
+        break;
+    }
+  };
+
+  const [appState, dispatch] = React.useReducer(reducer, state);
+
+  const authContext = React.useMemo(
+    () => ({
+      signOut: () => {
+        dispatch({type: 'SIGN_OUT'});
+      },
+      numAuth: () => {
+        var userToken = 'userToken';
+        dispatch({type: 'NUM_AUTH', token: userToken});
+      },
+    }),
+    [],
   );
-}
+  //const [isLoading, setLoading] = React.useState(true)
+  //const [token, setToken] = React.useState(null)
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  //const [state,]
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      //setLoading(false)
+      //setToken('userToken')
+      var userToken = 'userToken';
+      dispatch({type: 'RETRIEVE_TOKEN', token: userToken});
+    }, 600);
+  }, []);
+
+  if (appState.isLoading) {
+    return <SplashScreen />;
+  }
+
+  return (
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        {appState.token == null ? (
+          <AuthStack.Navigator>
+            <AuthStack.Screen name="Welcome" component={Welcome} options ={{headerShown:false}} />
+            <AuthStack.Screen name="Number" component={NumAuth} />
+            <AuthStack.Screen name="Name" component={ProvNam} />
+          </AuthStack.Navigator>
+        ) : (
+         <AuthStack.Navigator >
+           <AuthStack.Screen name="Home" component ={HomeStack} options = {{
+             headerShown : true ,
+             header:()=>{
+               return(
+                <TabBar/>
+               )
+             } 
+           }} />
+    
+         </AuthStack.Navigator>
+        )}
+      </NavigationContainer>
+    </AuthContext.Provider>
+  );
+};
+
+export default App;
