@@ -5,8 +5,8 @@ This is a clone of the WhatsApp Messenger app
 Index number : 10687549
 
 # Expo credentials
-Username : Quamies
+Email : emmanuelquami@outlook.com
 
-Password : monrovia360
+Password : source360
 
-link : 
+link : https://expo.io/@quami-source/whatsclone
